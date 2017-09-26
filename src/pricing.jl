@@ -9,3 +9,11 @@ end
 function pricing(instrument::String, stream::Bool)
     stream ? get_streaming(stream_url * instrument; headers = headers) : pricing(instrument)
 end
+
+function pricing(instruments::Array{AbstractString,1})
+    get(static_url * join(instruments,"%2C"); headers = headers)
+end
+
+function pricing(instruments::Array{AbstractString,1}, stream::Bool)
+    stream ? get_streaming(stream_url * join(instruments,"%2C"); headers = headers) : pricing(instrument)
+end
