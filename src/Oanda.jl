@@ -1,5 +1,7 @@
+__precompile__()
 module Oanda
-
-# package code goes here
-
-end # module
+using Requests: json, get
+export pricing
+include("init.jl")
+include("pricing.jl")
+end
