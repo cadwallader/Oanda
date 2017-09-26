@@ -7,6 +7,5 @@ function pricing(instrument::String)
 end
 
 function pricing(instrument::String, stream::Bool)
-    url = stream ? stream_url : static_url
-    get(url * instrument; headers = headers)
+    stream ? get_streaming(stream_url * instrument; headers = headers) : pricing(instrument)
 end
