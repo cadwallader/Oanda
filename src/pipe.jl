@@ -1,4 +1,4 @@
-function pipe(stream::Requests.ResponseStream{MbedTLS.SSLContext})
+function pipe(stream::ResponseStream)
     data = ""
     while (data = readline(stream.buffer)) == ""
         sleep(.01)
