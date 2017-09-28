@@ -1,7 +1,8 @@
 __precompile__()
 module Oanda
-using Requests: json, get, get_streaming
+using Requests
 export pricing
 include("init.jl")
 include("pricing.jl")
+include("pipe.jl")
 end
