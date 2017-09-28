@@ -1,6 +1,6 @@
 __precompile__()
 module Oanda
-using Requests
+using Requests, JSON
 export pricing, pipe
 include("init.jl")
 include("pricing.jl")
