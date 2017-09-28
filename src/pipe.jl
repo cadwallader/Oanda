@@ -1,4 +1,4 @@
-function pipe(stream::ResponseStream)
+function pipe(stream::Requests.ResponseStream)
     data = ""
     while (data = readline(stream.buffer)) == ""
         sleep(.01)
