@@ -3,7 +3,7 @@ function pipe(stream::Requests.ResponseStream)
         #yield()
     end
     tick = JSON.parse(readline(stream.buffer))
-    get(tick,"type","") = "PRICE" ? tick: pipe(stream)
+    get(tick,"type","") == "PRICE" ? tick: pipe(stream)
 end
 
 function flatten(tick::Dict{String,Any})
