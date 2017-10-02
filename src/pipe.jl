@@ -1,10 +1,9 @@
 function pipe(stream::Requests.ResponseStream)
-    data = ""
-    while (data = readline(stream.buffer)) == ""
-        sleep(.01)
+    while nb_available(stream.buffer) == 0
+        #yield()
     end
-    tick = JSON.parse(data)
-    tick["type"] == "PRICE" ? flatten(tick): pipe(stream)
+    tick = JSON.parse(readline(stream.buffer))
+    get(tick,"type","") = "PRICE" ? tick: pipe(stream)
 end
 
 function flatten(tick::Dict{String,Any})
