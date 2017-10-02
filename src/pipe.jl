@@ -1,7 +1,7 @@
 function pipe(stream::Requests.ResponseStream)
     while nb_available(stream.buffer) == 0
         #yield()
-        print(nb_available(stream.buffer) == 0)
+        sleep(.001)
     end
     tick = JSON.parse(readline(stream.buffer))
     get(tick,"type","") == "PRICE" ? flatten(tick): pipe(stream)
