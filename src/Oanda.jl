@@ -5,6 +5,5 @@ export pricing, pipe, lineTest, logging
 include("init.jl")
 include("pricing.jl")
 include("pipe.jl")
-include("tests.jl")
 include("logging.jl")
 end
