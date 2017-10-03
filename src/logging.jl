@@ -2,7 +2,7 @@ function logging(stream::Requests.ResponseStream, log_path::String)
     while true
         tick = pipe(stream)
         open(log_path,"a") do f
-            write(f,Dates.format(now()-Dates.Hour(6), "yyyy-mm-ddTHH:MM:SS.sss"), " ")
+            write(f,Dates.format(now()+Dates.Hour(7), "yyyy-mm-ddTHH:MM:SS.sss"), " ")
             write(f,tick["time"]," ")
             write(f,tick["instrument"],"\n")
         end
