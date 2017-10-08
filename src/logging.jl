@@ -16,3 +16,9 @@ function log_test(timestamps::Array{Any,1})
     running_tally = [sum(deltas[1:i]) for i in 1:length(deltas)]
     StatsBase.countmap(deltas)
 end
+
+function packet_order_test(timestamps)
+    order = sortperm(data)
+    line = [i for i in 1:length(data)]
+    order - line
+end

@@ -15,5 +15,5 @@ function pricing(instruments::Array{String,1})
 end
 
 function pricing(instruments::Array{String,1}, stream::Bool)
-    stream ? get_streaming(stream_url * join(instruments,"%2C"); headers = headers) : pricing(instrument)
+    stream ? get_streaming(stream_url * join(instruments,"%2C"); headers = headers) : pricing(instruments)
 end
