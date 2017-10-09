@@ -16,6 +16,7 @@ function packet_order_test(departures::Array{DateTime,1})
 end
 
 function read_log(file::String)
+    df = Dates.DateFormat("y-m-dTH:M:S.s")
     departures = DateTime[]
     arrivals = DateTime[]
     travel_times = Int[]
@@ -23,8 +24,8 @@ function read_log(file::String)
     open(file) do f
         while !eof(f)
             l = split(readline(f)," ")
-            departed = DateTime(l[2])
-            arrived = DateTime(l[1])
+            departed = DateTime(l[2],df)
+            arrived = DateTime(l[1],df)
             push!(travel_time,(arrived-departed).value)
             push!(arrivals,arrived)
             push!(departures,departed)
