@@ -1,9 +1,0 @@
-.gitignore
-*.jl.cov
-*.jl.*.cov
-*.jl.mem
-init.jl
-*.ipynb
-data/
-log/
-*.swp
