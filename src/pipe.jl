@@ -1,13 +1,12 @@
 function pipe(stream::Requests.ResponseStream)
     while nb_available(stream.buffer) == 0
-        #yield()
-        sleep(.001)
+        sleep(.001) #TODO do something useful like yield() instead of just sleep
     end
     tick = JSON.parse(readline(stream.buffer))
     get(tick,"type","") == "PRICE" ? flatten(tick): pipe(stream)
 end
 
-function flatten(tick::Dict{String,Any})
+function flatten(tick::Dict{String,Any}) #NOTE ["asks"][1] and ["bids"][1] assume one liquidity provider per practice API, TODO test on live API
     Dict(
         "instrument" => tick["instrument"],
         "time" => tick["time"][1:end-7],
