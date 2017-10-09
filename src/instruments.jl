@@ -12,6 +12,6 @@ function instruments()
     Requests.get("https://api-fxpractice.oanda.com/v3/accounts/"*Oanda.account*"/instruments";headers = Oanda.headers)
 end
 
-function instruments(data::HttpCommon.Response)
+function instruments(data::Requests.HttpCommon.Response)
     [i["name"] for i in Requests.json(data)["instruments"]]
 end
