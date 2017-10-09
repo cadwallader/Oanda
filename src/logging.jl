@@ -1,24 +1,39 @@
 function logging(stream::Requests.ResponseStream, log_path::String)
     while true
-        tick = pipe(stream)
+        tick = Oanda.pipe(stream)
         open(log_path,"a") do f
-            write(f,Dates.format(now()+Dates.Hour(7), "yyyy-mm-ddTHH:MM:SS.sss"), " ")
+            write(f,Dates.format(now(Dates.UTC), "yyyy-mm-ddTHH:MM:SS.sss"), " ")
             write(f,tick["time"]," ")
             write(f,tick["instrument"],"\n")
         end
     end
 end
 
-function log_test(timestamps::Array{Any,1})
-    sorted = [find(timestamps .== i)[1] for i in sort(timestamps)] #duplicate indices if duplicates in timestamps due to find()[1]
-    straight_line = [i for i in 1:length(test1)] #vector of indices
-    deltas = sorted - straight_line
-    running_tally = [sum(deltas[1:i]) for i in 1:length(deltas)]
-    StatsBase.countmap(deltas)
+function packet_order_test(departures::Array{DateTime,1})
+    order = sortperm(departures)
+    line = [i for i in 1:length(order)]
+    StatsBase.countmap(order - line)
 end
 
-function packet_order_test(timestamps)
-    order = sortperm(data)
-    line = [i for i in 1:length(data)]
-    order - line
+function read_log(file::String)
+    departures = DateTime[]
+    arrivals = DateTime[]
+    travel_times = Int[]
+    pairs = String[]
+    open(file) do f
+        while !eof(f)
+            l = split(readline(f)," ")
+            departed = DateTime(l[2])
+            arrived = DateTime(l[1])
+            push!(travel_time,(arrived-departed).value)
+            push!(arrivals,arrived)
+            push!(departures,departed)
+            push!(pairs,l[3])
+        end
+    end
+    Dict{String,Array{Any,1}}("sent"=>departures, "received"=>arrivals, "latency"=>travel_times,"instrument"=>pairs)
+end
+
+function plot_log(travel_times::Array{Int,1})
+    PlotlyJS.plot(PlotlyJS.scatter(y=travel_times))
 end
