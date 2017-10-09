@@ -9,6 +9,20 @@ function logging(stream::Requests.ResponseStream, log_path::String)
     end
 end
 
+function logging(stream::Requests.ResponseStream, log_path::String, verbose::Bool)
+    while true
+        tick = Oanda.pipe(stream)
+        open(log_path,"a") do f
+            write(f,Dates.format(now(Dates.UTC), "yyyy-mm-ddTHH:MM:SS.sss"), " ")
+            write(f,tick["time"]," ")
+            write(f,tick["instrument"]," ")
+            write(f,tick["asks"][1]["price"]," ")
+            write(f,tick["bids"][1]["price"],"\n")
+        end
+    end
+end
+
+
 function packet_order_test(departures::Array{DateTime,1})
     order = sortperm(departures)
     line = [i for i in 1:length(order)]
