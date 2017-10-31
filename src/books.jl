@@ -1,18 +1,20 @@
+const BOOK_URL = "https://api-fxpractice.oanda.com/v3/instruments/"
+
 function books(book::String, pair::String, t::DateTime)
     df = Dates.DateFormat("yyyy-mm-ddTHH:MM:00Z")
     dt = floor(t,Dates.Minute(20)) #else "errorMessage" => "Specified time 2017-10-08T01:22:55.230Z is misaligned."
-    url = "https://api-fxpractice.oanda.com/v3/instruments/" * pair * "/" * book * "?time=" * Dates.format(dt,df)
-    Requests.json(get(url; headers = Oanda.headers))[book]
+    url = BOOK_URL * pair * "/" * book * "?time=" * Dates.format(dt,df)
+    Requests.json(get(url; headers = HEADERS))[book]
 end
 
 function books(book::String, pair::String)
-    url = "https://api-fxpractice.oanda.com/v3/instruments/" * pair * "/" * book
-    Requests.json(get(url; headers = Oanda.headers))[book]
+    url = BOOK_URL * pair * "/" * book
+    Requests.json(get(url; headers = HEADERS))[book]
 end
 
 function books(book::String, pair::String, t::String)
-    url = "https://api-fxpractice.oanda.com/v3/instruments/" * pair * "/" * book * "?time=" * t
-    Requests.json(get(url; headers = Oanda.headers))[book]
+    url = BOOK_URL * pair * "/" * book * "?time=" * t
+    Requests.json(get(url; headers = HEADERS))[book]
 end
 
 function books(book::String, pair::String, t0::DateTime, t1::DateTime)
@@ -32,4 +34,3 @@ function books(book::String, pair::Array{String,1}, t0::DateTime, t1::DateTime)
     end
     return out
 end
-    
