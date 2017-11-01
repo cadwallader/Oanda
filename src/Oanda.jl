@@ -22,7 +22,8 @@ function Tick(i::Dict{String,Any})
     )
 end
 include("init.jl")  #return values for account and api_key
-const OANDA_HEADERS = Dict("Content-Type" => "application/json", "Authorization" => "Bearer " * API_KEY)
+const HEADERS = Dict("Content-Type" => "application/json", "Authorization" => "Bearer " * API_KEY)
+
 include("pairs.jl") #return array of tradeable instruments for given account
 include("prices.jl")#return buffered stream of price data for instrument(s), #return next price from stream
 include("books.jl") #return order book and/or position book for instrument(s) and time period(s)
