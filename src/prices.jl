@@ -18,7 +18,7 @@ function price_stream(instruments::Array{String,1})
     price_stream(join(instruments, URL_DELIMITER))
 end
 
-function next(stream::Requests.ResponseStream)
+function Base.next(stream::Requests.ResponseStream)
     while nb_available(stream.buffer) == 0
         sleep(.001) #TODO do something useful like yield() instead of just sleep
     end
