@@ -1,7 +1,7 @@
 __precompile__()
 module Oanda
 using Requests, JSON
-export price_stream, next, books, pairs
+export price_stream, books, pairs, log_json
 export Tick
 type Tick
     ask::Float64

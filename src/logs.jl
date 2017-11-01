@@ -7,8 +7,8 @@ function log_stream(stream::Requests.ResponseStream, log_path::String; verbose::
             write(f, Dates.format(tick.recd, LOG_FORMAT), " ")
             write(f, Dates.format(tick.sent, LOG_FORMAT), " ")
             if verbose
-                write(f, tick.bid, " ")
-                write(f, tick.ask, " ")
+                write(f, string(tick.bid), " ")
+                write(f, string(tick.ask), " ")
             end
             write(f, tick.pair, "\n")
         end
@@ -18,5 +18,11 @@ end
 function log_tick(tick::Tick, log_path::String)
     open(log_path,"a") do f
         write(f, JSON.json(tick), "\n")
+    end
+end
+
+function log_json(stream::Requests.ResponseStream, log_path::String)
+    while true
+        log_tick(next(stream), log_path)
     end
 end
