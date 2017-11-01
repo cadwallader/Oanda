@@ -26,17 +26,17 @@ function Base.next(stream::Requests.ResponseStream)
     get(tick, "type", "") == "PRICE" ? Tick(tick) : next(stream)
 end
 
-function flatten(tick::Dict{String,Any}) #NOTE ["asks"][1] and ["bids"][1] assume one liquidity provider per practice API, TODO test on live API
-    Dict(
-        "arrival" => Dates.format(now(Dates.UTC), "yyyy-mm-ddTHH:MM:SS.sss"),
-        "instrument" => tick["instrument"],
-        "time" => tick["time"][1:end-7],
-        "liquidityAsk" => tick["asks"][1]["liquidity"],
-        "liquidityBid" => tick["bids"][1]["liquidity"],
-        "closeoutAsk" => parse(Float64,tick["closeoutAsk"]),
-        "closeoutBid" => parse(Float64,tick["closeoutBid"]),
-        "bid" => parse(Float64,tick["bids"][1]["price"]),
-        "ask" => parse(Float64,tick["asks"][1]["price"]),
-        "tradeable" => tick["tradeable"]
-    )
-end
+#function flatten(tick::Dict{String,Any}) #NOTE ["asks"][1] and ["bids"][1] assume one liquidity provider per practice API, TODO test on live API
+#    Dict(
+#        "arrival" => Dates.format(now(Dates.UTC), "yyyy-mm-ddTHH:MM:SS.sss"),
+#        "instrument" => tick["instrument"],
+#        "time" => tick["time"][1:end-7],
+#        "liquidityAsk" => tick["asks"][1]["liquidity"],
+#        "liquidityBid" => tick["bids"][1]["liquidity"],
+#        "closeoutAsk" => parse(Float64,tick["closeoutAsk"]),
+#        "closeoutBid" => parse(Float64,tick["closeoutBid"]),
+#        "bid" => parse(Float64,tick["bids"][1]["price"]),
+#        "ask" => parse(Float64,tick["asks"][1]["price"]),
+#        "tradeable" => tick["tradeable"]
+#    )
+#end

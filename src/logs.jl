@@ -17,6 +17,7 @@ end
 
 function log_tick(tick::Tick, log_path::String)
     open(log_path,"a") do f
+        print(tick,"\n")
         write(f, JSON.json(tick), "\n")
     end
 end
