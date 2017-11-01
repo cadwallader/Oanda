@@ -12,7 +12,7 @@ type Tick
     live::Bool
 end
 function Tick(i::Dict{String,Any})
-    new(
+    Tick(
         parse(Float64,i["asks"][1]["price"]), #ask
         parse(Float64,i["bids"][1]["price"]), #bid
         DateTime(i["time"][1:end-7]),         #sent
