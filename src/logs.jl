@@ -26,3 +26,9 @@ function log_json(stream::Requests.ResponseStream, log_path::String)
         log_tick(next(stream), log_path)
     end
 end
+
+function log_db(stream::Requests.ResponseStream, db::SQLite.DB, table::String)
+    while true
+        SQLite.query(db, "INSERT INTO $table VALUES $(string(next(stream))[11:end])");
+    end
+end

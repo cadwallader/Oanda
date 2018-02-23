@@ -1,7 +1,7 @@
 __precompile__()
 module Oanda
-using Requests, JSON
-export price_stream, books, pairs, log_json
+using Requests, JSON, SQLite
+export price_stream, books, pairs, log_json, log_db
 export Tick
 type Tick
     ask::Float64
@@ -9,20 +9,20 @@ type Tick
     sent::DateTime
     recd::DateTime
     pair::String
-    live::Bool
+    #live::Bool
 end
 function Tick(i::Dict{String,Any})
     Tick(
         parse(Float64,i["asks"][1]["price"]), #ask
         parse(Float64,i["bids"][1]["price"]), #bid
-        DateTime(i["time"][1:end-7]),         #sent
-        now(Dates.UTC),                       #recd
+        i["time"],         #sent
+        time(),                       #recd
         i["instrument"],                      #pair
-        i["tradeable"]                        #live
+        #i["tradeable"]                        #live
     )
 end
 include("init.jl")  #return values for account and api_key
-const HEADERS = Dict("Content-Type" => "application/json", "Authorization" => "Bearer " * API_KEY)
+const HEADERS = Dict("Content-Type" => "application/json", "Authorization" => "Bearer " * API_KEY, "AcceptDatetimeFormat" => "UNIX")
 
 include("pairs.jl") #return array of tradeable instruments for given account
 include("prices.jl")#return buffered stream of price data for instrument(s), #return next price from stream
