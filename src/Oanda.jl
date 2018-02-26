@@ -15,14 +15,14 @@ function Tick(i::Dict{String,Any})
     Tick(
         parse(Float64,i["asks"][1]["price"]), #ask
         parse(Float64,i["bids"][1]["price"]), #bid
-        i["time"],         #sent
+        parse(Int,i["time"]),         #sent
         time(),                       #recd
-        i["instrument"],                      #pair
+        i["instrument"]                      #pair
         #i["tradeable"]                        #live
     )
 end
 include("init.jl")  #return values for account and api_key
-const HEADERS = Dict("Content-Type" => "application/json", "Authorization" => "Bearer " * API_KEY, "AcceptDatetimeFormat" => "UNIX")
+const HEADERS = Dict("Content-Type" => "application/json", "Authorization" => "Bearer " * API_KEY, "AcceptDatetimeFormat" => "RFC3339")
 
 include("pairs.jl") #return array of tradeable instruments for given account
 include("prices.jl")#return buffered stream of price data for instrument(s), #return next price from stream
