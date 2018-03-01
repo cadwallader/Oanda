@@ -15,8 +15,8 @@ function Tick(i::Dict{String,Any})
     Tick(
         parse(Float64,i["asks"][1]["price"]), #ask
         parse(Float64,i["bids"][1]["price"]), #bid
-        parse(Int,i["time"]),         #sent
-        time(),                       #recd
+        parse(DateTime,i["time"]),         #sent
+        now(),                             #recd
         i["instrument"]                      #pair
         #i["tradeable"]                        #live
     )
